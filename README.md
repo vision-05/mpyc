@@ -280,5 +280,114 @@ $$u(t) = k_{mpc} x(t)$$
 
 And that concludes our unconstrained MPC for stabilisation, or setting a state to 0
 
+## Unconstrained tracking with QP
 
+Track output to a reference $r(t)$.
 
+We assume the reference is a constant, why? We implement only a single control action in our sequence, so for the time $t_s$ our reference doesn't change.
+
+So we can say $r(t) = r_c$
+
+We want to minimise the difference between the output and our reference, so this time we need to get the next output in terms of our previous ouptut and the changes in state and changes in input. These represent the state and input added from a single timestep.
+
+Thus we will need a new set of equations, starting with state equations that contain a constant unknown disturbance
+
+Fill in here
+
+$$\Delta x(t) = x(t) - x(t-1)$$
+
+$$\Delta x(t+1) = x(t+1) - x(t)$$
+
+$$\Delta u(t) = u(t) - u(t-1)$$
+
+$$\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)$$
+
+Next we must find the equation for $y(t+1)$ in terms of $y(t)$
+
+$$y(t) = Cx(t) + Du(t)$$
+
+$$y(t+1) = Cx(t+1) + Du(t+1)$$
+
+Assume the inputs are equal???? IDK why
+
+$$\Delta y(t+1) = y(t+1) - y(t)$$
+
+$$\Delta y(t+1) = C(x(t+1)-x(t))$$
+
+$$\Delta y(t+1) = C \Delta x(t+1)$$
+
+$$\Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t)$$
+
+$$y(t+1) = y(t) + \Delta y(t+1)$$
+
+$$y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)$$
+
+So
+
+$$\begin{bmatrix} \Delta x(t+1) \\\ y(t+1) \end{bmatrix}
+= \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}
+\begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + 
+\begin{bmatrix} B \\\ CB\end{bmatrix} \Delta u(t)$$
+
+And then our new output is 
+$$y(t) = \begin{bmatrix} 0 & I \end{bmatrix}
+\begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}$$
+
+This gives us our augmented state space, so we have
+
+$$x_a = \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}$$
+
+$$u_a = \Delta u(t)$$
+
+$$\dot{x}_a = A_a x_a + B_a u_a$$
+
+$$y_a = C_c x_a$$
+
+Where
+
+$$A_a = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}$$
+
+$$B_a = \begin{bmatrix} B \\\ CB \end{bmatrix}$$
+
+$$C_a = \begin{bmatrix} 0 & I \end{bmatrix}$$
+
+Our next step is to turn this into a QP problem to solve, so we must come up with a quadratic cost function
+
+$$J(U_t) = \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)$$
+
+So Our optimisation problem is
+
+$$\min_{\Delta U_t} \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)$$
+
+And then we form our equations for the states
+
+$$\begin{bmatrix} y_{a,t} \\\ y_{a,t+1} \\\ . \\\ . \\\ . \\\ y_{a,t+N-2} \\\ y_{a,t+N-1} \end{bmatrix} =
+\begin{bmatrix} 1 \\\ A_a \\\ . \\\ . \\\ . \\\ A_a^{N-2} \\\ A_a^{N-1} \end{bmatrix} x_a(t) + 
+\begin{bmatrix}
+0 & 0 & . & . & . & 0 & 0 \\\
+B_a & 0 & . & . & . & 0 & 0 \\\
+. & . & . & . & . & . &. \\\
+. & . & . & . & . & . &. \\\
+. & . & . & . & . & . &. \\\
+A_a^{N-3}B_a & A_a^{N-4}B_a & . & . & . & 0 & 0 \\\
+A_a^{N-2}B_a & A_a^{N-3}B_a & . & . & . & B_a & 0
+\end{bmatrix}
+\begin{bmatrix} \Delta u_t \\\ \Delta u_t+1 \\\ . \\\ . \\\ . \\\ \Delta u_{t+N-2} \\\ \Delta u_{t+N-1} \end{bmatrix}$$
+
+Obtaining the equations in the form
+
+$$Y_t = F x_a(t) + \phi \Delta U_t$$
+
+So
+
+$$J_t = (Y_t-R_c)^T Q_Q (Y_t-R_c) + \Delta U_t^T R_R \Delta U_t$$
+
+$$J_t = (F x_a(t) + \phi \Delta U_t-R_c)^T Q_Q (F x_a(t) + \phi \Delta U_t-R_c) + \Delta U_t^T R_R \Delta U_t$$
+
+$$J_t = \Delta U_t^T(\phi^T Q_Q \phi + R_R)\Delta U_t + 2 \Delta U_t^T\phi^T Q_Q (F x_a(t) - R_c) + ...$$
+
+Then take derivative
+
+$$ \frac{\delta J_t}{\delta \Delta U_t} = 2 (\phi^T Q_Q \phi + R_R) \Delta U_t + 2\phi^T Q_Q (F x_a(t) - R_c)$$
+
+Set to 0 and solve
