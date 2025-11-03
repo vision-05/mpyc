@@ -4,21 +4,29 @@ MPC module from scratch in Python with numpy, an application of my control 2 mod
 # Discretisation
 
 ## Euler discretisation
-$$\dot{x}(t) = A_cx(t)+B_cu(t)\\
-y(t) = C_cx(t) + D_cu(t)$$
+$$\dot{x}(t) = A_cx(t)+B_cu(t)$$
+
+$$y(t) = C_cx(t) + D_cu(t)$$
 
 We would like to discretise this system using the Euler discretisation. The euler discretisation uses a forward divided difference and so it is computationally cheap, although it requires <assumptions> to be accurate enough
 
 Assume that we only have an integer timestep so we have $t_s$ as our timestep length and $k$ as our integer multiplier
 
-$\dot{x}(kt_s) = A_cx(kt_s) + B_cu(kt_s)\\
-\dot{x}(kt_s) \approx \frac{x((k+1)t_s) - x(kt_s)}{t_s}\\
-\frac{x((k+1)t_s) - x(kt_s)}{t_s} = A_cx(kt_s) + B_cu(kt_s)\\
-x((k+1)t_s) - x(kt_s) = t_sA_cx(kt_s) + t_sB_cu(kt_s)\\
-x((k+1)t_s) = x(kt_s) + t_sA_cx(kt_s) + t_sB_cu(kt_s)\\
-x((k+1)t_s) = (I+t_sA_c)x(kt_s) + t_sB_cu(kt_s)\\
-x(k+1) = Ax(k) + Bu(k)\\
-y(k) = C(k) + D(k)$$
+$$\dot{x}(kt_s) = A_cx(kt_s) + B_cu(kt_s)$$
+
+$$\dot{x}(kt_s) \approx \frac{x((k+1)t_s) - x(kt_s)}{t_s}$$
+
+$$\frac{x((k+1)t_s) - x(kt_s)}{t_s} = A_cx(kt_s) + B_cu(kt_s)$$
+
+$$x((k+1)t_s) - x(kt_s) = t_sA_cx(kt_s) + t_sB_cu(kt_s)$$
+
+$$x((k+1)t_s) = x(kt_s) + t_sA_cx(kt_s) + t_sB_cu(kt_s)$$
+
+$$x((k+1)t_s) = (I+t_sA_c)x(kt_s) + t_sB_cu(kt_s)$$
+
+$$x(k+1) = Ax(k) + Bu(k)$$
+
+$$y(k) = C(k) + D(k)$$
 Where
 
 $A = I+t_sA_c\\
