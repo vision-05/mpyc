@@ -60,8 +60,9 @@ $$-ae^{-at}x(t) + e^{-at}\dot{x}(t) = e^{-at}bu(t)$$
 
 Through product rule
 
-$\frac{d}{dt}(e^{-at}x(t)) = (\frac{d}{dt}e^{-at})x(t) + e^{-at}(\frac{d}{dt}x(t))\\
-\frac{d}{dt}(e^{-at}x(t)) = -ae^{-at}x(t) + e^{-at}\dot{x}(t)$$
+$$\frac{d}{dt}(e^{-at}x(t)) = (\frac{d}{dt}e^{-at})x(t) + e^{-at}(\frac{d}{dt}x(t))$$
+
+$$\frac{d}{dt}(e^{-at}x(t)) = -ae^{-at}x(t) + e^{-at}\dot{x}(t)$$
 
 Substitute in this equality
 
