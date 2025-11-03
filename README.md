@@ -203,8 +203,10 @@ In order to find our $U_t^*$ we must come up with an optimal control problem.
 $$ J(U_t) = \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}} $$
 
 Where
-$$ Q \geq 0 \\
-R \geq 0$$
+
+$$ Q \geq 0$$
+
+$$R \geq 0$$
 
 $Q$ and $R$ are tunable, where higher $Q$ penalises state deviation from 0, and greater $R$ penalises higher control effort. Think about it, your controller wants to use the minimal amount of effort to get your state to 0. But sometimes you dont need to limit your control effort as much, and that gives you a quicker response. But sometimes having a lower effort is more important than quick response, such as autopilot car acceleration.
 
