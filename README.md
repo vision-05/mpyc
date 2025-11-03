@@ -226,16 +226,21 @@ $$ J_t = \begin{bmatrix} x_t^T & x_{t+1}^T & ... & x_{t+N-1}^T \end{bmatrix} Q_Q
 $$J_t = X_t^T Q_Q X_t + U_t^T R_R U_t$$
 
 where 
-$$ Q_Q = diag(Q,Q,...,Q) \in \R^{Nn \times Nn} \\
-R_R = diag(R,R,...,R) \in \R^{Nm \times Nm}$$
+$$ Q_Q = diag(Q,Q,...,Q) \in \R^{Nn \times Nn}$$
+
+$$R_R = diag(R,R,...,R) \in \R^{Nm \times Nm}$$
+
 and
-$$ x \in \R^n \\
-u \in \R^m$$
+
+$$ x \in \R^n$$
+
+$$u \in \R^m$$
 
 Then
 
-$$J_t = (Fx(t) + \phi U_t)^T Q_Q (Fx(t) + \phi U_t) + U_t^T R_R U_t \\
- J_t = U_t^T(\phi^T Q_Q \phi + R_R)U_t + 2 U_t^T \phi^T Q_Q Fx(t) + x(t)^T F^T Q_Q F x(t)$$
+$$J_t = (Fx(t) + \phi U_t)^T Q_Q (Fx(t) + \phi U_t) + U_t^T R_R U_t$$
+
+$$J_t = U_t^T(\phi^T Q_Q \phi + R_R)U_t + 2 U_t^T \phi^T Q_Q Fx(t) + x(t)^T F^T Q_Q F x(t)$$
 
 Then from here we want to minimise the cost, so we take the gradient with respect to $U_t$
 
@@ -250,10 +255,12 @@ Which is in the form
 $$U_t^* = \begin{bmatrix} u_t^* \\\ u_{t+1}^* \\\ . \\\ . \\\ . \\\ u_{t+N-1}^* \end{bmatrix}$$
 
 Then to obtain only the first control input, we set
-$$u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* \\
-u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)$$
+$$u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* $$
+
+$$u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)$$
 
 Then define the control law
+
 $$k_{mpc} = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}$$
 
 and
