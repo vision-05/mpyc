@@ -223,7 +223,8 @@ $$U_t = \set{u_t, u_{t+1}, ..., u_{t+N-1}}$$
 For this case, we can find a closed form solution:
 
 The cost is
-$$ J_t = \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}} $$
+
+$$J_t = \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}}$$
 
 Then sub in our states
 
@@ -257,9 +258,11 @@ $$2(\phi^T Q_Q \phi + R_R)U_t^* + 2 \phi^T Q_Q Fx(t)=0 \\
 U_t^* = \frac{-\phi^T Q_Q Fx(t)}{\phi^T Q_Q\phi + R_R}$$
 
 Which is in the form
+
 $$U_t^* = \begin{bmatrix} u_t^* \\\ u_{t+1}^* \\\ . \\\ . \\\ . \\\ u_{t+N-1}^* \end{bmatrix}$$
 
 Then to obtain only the first control input, we set
+S
 $$u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* $$
 
 $$u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)$$
