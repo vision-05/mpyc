@@ -209,11 +209,16 @@ R \geq 0$$
 $Q$ and $R$ are tunable, where higher $Q$ penalises state deviation from 0, and greater $R$ penalises higher control effort. Think about it, your controller wants to use the minimal amount of effort to get your state to 0. But sometimes you dont need to limit your control effort as much, and that gives you a quicker response. But sometimes having a lower effort is more important than quick response, such as autopilot car acceleration.
 
 So our Quadratic Program is as follows:
+
 $$ U_t^* = \argmin_{U_t} \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}} $$
+
 Subject to
-$$ x_t = x(t) \\
-   x_{t+k+1} = Ax_{t+k} + Bu_{t+k} \\
-   U_t = \set{u_t, u_{t+1}, ..., u_{t+N-1}}$$
+
+$$ x_t = x(t)$$
+   
+$$x_{t+k+1} = Ax_{t+k} + Bu_{t+k}$$
+
+$$U_t = \set{u_t, u_{t+1}, ..., u_{t+N-1}}$$
 
 For this case, we can find a closed form solution:
 
