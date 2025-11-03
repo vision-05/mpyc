@@ -324,24 +324,24 @@ $$y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)$$
 
 So
 
-$$\begin{bmatrix} \Delta x(t+1) \\\ y(t+1) \end{bmatrix}
+$$\begin{equation}\begin{bmatrix} \Delta x(t+1) \\\ y(t+1) \end{bmatrix}
 = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}
 \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + 
-\begin{bmatrix} B \\\ CB\end{bmatrix} \Delta u(t)$$
+\begin{bmatrix} B \\\ CB\end{bmatrix} \Delta u(t)\end{equation}$$
 
 And then our new output is 
-$$y(t) = \begin{bmatrix} 0 & I \end{bmatrix}
-\begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}$$
+$$\begin{equation}y(t) = \begin{bmatrix} 0 & I \end{bmatrix}
+\begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}\end{equation}$$
 
 This gives us our augmented state space, so we have
 
-$$x_a = \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}$$
+$$\begin{equation}x_a = \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}\end{equation}$$
 
-$$u_a = \Delta u(t)$$
+$$\begin{equation}u_a = \Delta u(t)\end{equation}$$
 
-$$\dot{x}_a = A_a x_a + B_a u_a$$
+$$\begin{equation}\dot{x}_a = A_a x_a + B_a u_a\end{equation}$$
 
-$$y_a = C_c x_a$$
+$$\begin{equation}y_a = C_c x_a\end{equation}$$
 
 Where
 
@@ -353,15 +353,15 @@ $$C_a = \begin{bmatrix} 0 & I \end{bmatrix}$$
 
 Our next step is to turn this into a QP problem to solve, so we must come up with a quadratic cost function
 
-$$J(U_t) = \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)$$
+$$\begin{equation}J(U_t) = \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)\end{equation}$$
 
 So Our optimisation problem is
 
-$$\min_{\Delta U_t} \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)$$
+$$\begin{equation}\min_{\Delta U_t} \sum_{k=0}^{N-1}(y(t+k)-r_c)^T Q_Q (y(t+k)-r_c) + \Delta u(t+k)^T R_R \Delta u(t+k)\end{equation}$$
 
 And then we form our equations for the states
 
-$$\begin{bmatrix} y_{a,t} \\\ y_{a,t+1} \\\ . \\\ . \\\ . \\\ y_{a,t+N-2} \\\ y_{a,t+N-1} \end{bmatrix} =
+$$\begin{equation}\begin{bmatrix} y_{a,t} \\\ y_{a,t+1} \\\ . \\\ . \\\ . \\\ y_{a,t+N-2} \\\ y_{a,t+N-1} \end{bmatrix} =
 \begin{bmatrix} 1 \\\ A_a \\\ . \\\ . \\\ . \\\ A_a^{N-2} \\\ A_a^{N-1} \end{bmatrix} x_a(t) + 
 \begin{bmatrix}
 0 & 0 & . & . & . & 0 & 0 \\\
@@ -372,22 +372,34 @@ B_a & 0 & . & . & . & 0 & 0 \\\
 A_a^{N-3}B_a & A_a^{N-4}B_a & . & . & . & 0 & 0 \\\
 A_a^{N-2}B_a & A_a^{N-3}B_a & . & . & . & B_a & 0
 \end{bmatrix}
-\begin{bmatrix} \Delta u_t \\\ \Delta u_t+1 \\\ . \\\ . \\\ . \\\ \Delta u_{t+N-2} \\\ \Delta u_{t+N-1} \end{bmatrix}$$
+\begin{bmatrix} \Delta u_t \\\ \Delta u_t+1 \\\ . \\\ . \\\ . \\\ \Delta u_{t+N-2} \\\ \Delta u_{t+N-1} \end{bmatrix}\end{equation}$$
 
 Obtaining the equations in the form
 
-$$Y_t = F x_a(t) + \phi \Delta U_t$$
+$$\begin{equation}Y_t = F x_a(t) + \phi \Delta U_t\end{equation}$$
 
 So
 
-$$J_t = (Y_t-R_c)^T Q_Q (Y_t-R_c) + \Delta U_t^T R_R \Delta U_t$$
+$$\begin{equation}J_t = (Y_t-R_c)^T Q_Q (Y_t-R_c) + \Delta U_t^T R_R \Delta U_t\end{equation}$$
 
-$$J_t = (F x_a(t) + \phi \Delta U_t-R_c)^T Q_Q (F x_a(t) + \phi \Delta U_t-R_c) + \Delta U_t^T R_R \Delta U_t$$
+$$\begin{equation}J_t = (F x_a(t) + \phi \Delta U_t-R_c)^T Q_Q (F x_a(t) + \phi \Delta U_t-R_c) + \Delta U_t^T R_R \Delta U_t\end{equation}$$
 
-$$J_t = \Delta U_t^T(\phi^T Q_Q \phi + R_R)\Delta U_t + 2 \Delta U_t^T\phi^T Q_Q (F x_a(t) - R_c) + ...$$
+$$\begin{equation}J_t = \Delta U_t^T(\phi^T Q_Q \phi + R_R)\Delta U_t + 2 \Delta U_t^T\phi^T Q_Q (F x_a(t) - R_c) + ...\end{equation}$$
 
 Then take derivative
 
-$$ \frac{\delta J_t}{\delta \Delta U_t} = 2 (\phi^T Q_Q \phi + R_R) \Delta U_t + 2\phi^T Q_Q (F x_a(t) - R_c)$$
+$$\begin{equation} \frac{\delta J_t}{\delta \Delta U_t} = 2 (\phi^T Q_Q \phi + R_R) \Delta U_t + 2\phi^T Q_Q (F x_a(t) - R_c)\end{equation}$$
 
 Set to 0 and solve
+
+$$\begin{equation} 2 (\phi^T Q_Q \phi + R_R) \Delta U_t + 2\phi^T Q_Q (F x_a(t) - R_c) = 0\end{equation}$$
+
+$$\begin{equation} 2 (\phi^T Q_Q \phi + R_R) \Delta U_t = - 2\phi^T Q_Q (F x_a(t) - R_c)\end{equation}$$
+
+$$\begin{equation} \Delta U_t^* = - (\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_Q (F x_a(t) - R_c)\end{equation}$$
+
+And thus we have our optimal $\Delta U_t^*$ sequence for our horizon of length N for our tracking problem.
+
+Again we apply our receding horizon, so multiplying by $I_N$ (or with a control horizon size $M$ then $I_M$)
+
+$$\begin{equation} \Delta u_t^* = \begin{bmatrix} \end{bmatrix} \end{equation}
