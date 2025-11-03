@@ -254,15 +254,16 @@ $$ \frac{\delta J_t}{\delta U_t} = 2(\phi^T Q_Q \phi + R_R)U_t + 2 \phi^T Q_Q Fx
 
 Then set this to zero
 
-$$2(\phi^T Q_Q \phi + R_R)U_t^* + 2 \phi^T Q_Q Fx(t)=0 \\
-U_t^* = \frac{-\phi^T Q_Q Fx(t)}{\phi^T Q_Q\phi + R_R}$$
+$$2(\phi^T Q_Q \phi + R_R)U_t^* + 2 \phi^T Q_Q Fx(t)=0$$
+
+$$U_t^* = \frac{-\phi^T Q_Q Fx(t)}{\phi^T Q_Q\phi + R_R}$$
 
 Which is in the form
 
 $$U_t^* = \begin{bmatrix} u_t^* \\\ u_{t+1}^* \\\ . \\\ . \\\ . \\\ u_{t+N-1}^* \end{bmatrix}$$
 
 Then to obtain only the first control input, we set
-S
+
 $$u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* $$
 
 $$u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)$$
