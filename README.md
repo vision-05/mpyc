@@ -29,18 +29,22 @@ $$x(k+1) = Ax(k) + Bu(k)$$
 $$y(k) = C(k) + D(k)$$
 Where
 
-$A = I+t_sA_c\\
-B = t_sB_c\\
-C = C_c\\
-D = D_c$$
+$$A = I+t_sA_c$$
+
+$$B = t_sB_c$$
+
+$$C = C_c$$
+
+$$D = D_c$$
 
 Giving us the discretised system for a state space description
 
 ## Exact discretisation
 Take the state space description
 
-$\dot{x}(t) = A_cx(t)+B_cu(t)\\
-y(t) = C_cx(t) + D_cu(t)$$
+$$\dot{x}(t) = A_cx(t)+B_cu(t)$$
+
+$$y(t) = C_cx(t) + D_cu(t)$$
 
 Let us find the general solution to a state space system, which is the standard steps for solving homogeneous linear first order ODE
 
@@ -129,8 +133,9 @@ $$x((k+1)t_s) = Ax(kt_s) + Bu(kt_s)$$
 
 Where
 
-$$A = e^{A_ct_s}\\
-B = B_c\int_{0}^{t_s}e^{A_c\tau}d\tau$$
+$$A = e^{A_ct_s}$$
+
+$$B = B_c\int_{0}^{t_s}e^{A_c\tau}d\tau$$
 
 The output equations always remain the same so
 
@@ -138,8 +143,9 @@ $$y(kt_s) = Cx(kt_s) + Du(kt_s)$$
 
 Where
 
-$$C = C_c\\
-D = D_c$$
+$$C = C_c$$
+
+$$D = D_c$$
 
 As python does not support integration that returns a matrix, we instead create a new matrix
 
@@ -165,7 +171,7 @@ This also has 2 distinct disadvantages:
 Computationally expensive, for long time horizons and with terminal cost especially. This means that for particularly quickly sampled states, or for low powered devices this technique won't be very effective
 Requires a good model, so this will not work for a black box system, and is not robust to unmodelled dynamics.
 
-## Unconstrained stabilisation with LQR
+## Unconstrained stabilisation with QP
 We predict $x_{t+k}$ states, where $1 \leq k \leq N$ and $N$ is the number of steps in our time horizon 
 $$x_t = x(t) \\
 x_{t+1} = Ax_t + Bu_t \\
@@ -174,7 +180,7 @@ x_{t+2} = Ax_{t+1} + Bu_{t+1}
 x_{t+N-1} = A^{N-1}x_t + A^{N-2}Bu_t + A^{N-3}Bu_{t+1}+ ... + Bu_{t+N-2}$$
 
 Then we would like to state our states as a function of our initial state,
-$X_t = Fx(t) + \phi U_t$
+$$X_t = Fx(t) + \phi U_t$$
 
 so
 
