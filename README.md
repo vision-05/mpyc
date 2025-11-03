@@ -204,7 +204,7 @@ $$ J(U_t) = \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}} $$
 
 Where
 
-$$ Q \geq 0$$
+$$Q \geq 0$$
 
 $$R \geq 0$$
 
