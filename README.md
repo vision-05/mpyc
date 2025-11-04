@@ -230,8 +230,8 @@ $$J_t = \sum_{k=0}^{N-1}{x_{t+k}^T Q x_{t+k} + u_{t+k}^T R u_{t+k}}$$
 
 Then sub in our states
 
-$$ J_t = \begin{bmatrix} x_t^T & x_{t+1}^T & ... & x_{t+N-1}^T \end{bmatrix} Q_Q \begin{bmatrix} x_t^T \\\ x_{t+1}^T \\\ . \\\ . \\\ . \\\ x_{t+N-1}^T \end{bmatrix} + \begin{bmatrix} u_t^T & u_{t+1}^T & ... & u_{t+N-1}^T \end{bmatrix} R_R \begin{bmatrix} u_t^T \\\ u_{t+1}^T \\\ . \\\ . \\\ . \\\ u_{t+N-1}^T \end{bmatrix}$$
-$$J_t = X_t^T Q_Q X_t + U_t^T R_R U_t$$
+$$\begin{equation}J_t = \begin{bmatrix} x_t^T & x_{t+1}^T & ... & x_{t+N-1}^T \end{bmatrix} Q_Q \begin{bmatrix} x_t^T \\\ x_{t+1}^T \\\ . \\\ . \\\ . \\\ x_{t+N-1}^T \end{bmatrix} + \begin{bmatrix} u_t^T & u_{t+1}^T & ... & u_{t+N-1}^T \end{bmatrix} R_R \begin{bmatrix} u_t^T \\\ u_{t+1}^T \\\ . \\\ . \\\ . \\\ u_{t+N-1}^T \end{bmatrix}\end{equation}$$
+$$\begin{equation}J_t = X_t^T Q_Q X_t + U_t^T R_R U_t\end{equation}$$
 
 where 
 $$ Q_Q = diag(Q,Q,...,Q) \in \R^{Nn \times Nn}$$
@@ -246,37 +246,37 @@ $$u \in \R^m$$
 
 Then
 
-$$J_t = (Fx(t) + \phi U_t)^T Q_Q (Fx(t) + \phi U_t) + U_t^T R_R U_t$$
+$$\begin{equation}J_t = (Fx(t) + \phi U_t)^T Q_Q (Fx(t) + \phi U_t) + U_t^T R_R U_t\end{equation}$$
 
-$$J_t = U_t^T(\phi^T Q_Q \phi + R_R)U_t + 2 U_t^T \phi^T Q_Q Fx(t) + x(t)^T F^T Q_Q F x(t)$$
+$$\begin{equation}J_t = U_t^T(\phi^T Q_Q \phi + R_R)U_t + 2 U_t^T \phi^T Q_Q Fx(t) + x(t)^T F^T Q_Q F x(t)\end{equation}$$
 
 Then from here we want to minimise the cost, so we take the gradient with respect to $U_t$
 
-$$ \frac{\delta J_t}{\delta U_t} = 2(\phi^T Q_Q \phi + R_R)U_t + 2 \phi^T Q_Q Fx(t)$$
+$$\begin{equation}\frac{\delta J_t}{\delta U_t} = 2(\phi^T Q_Q \phi + R_R)U_t + 2 \phi^T Q_Q Fx(t)\end{equation}$$
 
 Then set this to zero
 
-$$2(\phi^T Q_Q \phi + R_R)U_t^* + 2 \phi^T Q_Q Fx(t)=0$$
+$$\begin{equation}2(\phi^T Q_Q \phi + R_R)U_t^* + 2 \phi^T Q_Q Fx(t)=0\end{equation}$$
 
-$$U_t^* = \frac{-\phi^T Q_Q Fx(t)}{\phi^T Q_Q\phi + R_R}$$
+$$\begin{equation}U_t^* = \frac{-\phi^T Q_Q Fx(t)}{\phi^T Q_Q\phi + R_R}\end{equation}$$
 
 Which is in the form
 
-$$U_t^* = \begin{bmatrix} u_t^* \\\ u_{t+1}^* \\\ . \\\ . \\\ . \\\ u_{t+N-1}^* \end{bmatrix}$$
+$$\begin{equation}U_t^* = \begin{bmatrix} u_t^* \\\ u_{t+1}^* \\\ . \\\ . \\\ . \\\ u_{t+N-1}^* \end{bmatrix}\end{equation}$$
 
 Then to obtain only the first control input, we set
 
-$$u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* $$
+$$\begin{equation}u(t) = \begin{bmatrix} 1 & 0 & ... & 0 \end{bmatrix} U_t^* \end{equation}$$
 
-$$u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)$$
+$$\begin{equation}u(t) = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}x(t)\end{equation}$$
 
 Then define the control law
 
-$$k_{mpc} = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}$$
+$$\begin{equation}k_{mpc} = -I_N \frac{\phi^T Q_Q F}{\phi^T Q_Q\phi + R_R}\end{equation}$$
 
 and
 
-$$u(t) = k_{mpc} x(t)$$
+$$\begin{equation}u(t) = k_{mpc} x(t)\end{equation}$$
 
 And that concludes our unconstrained MPC for stabilisation, or setting a state to 0
 
@@ -294,33 +294,33 @@ Thus we will need a new set of equations, starting with state equations that con
 
 Fill in here
 
-$$\Delta x(t) = x(t) - x(t-1)$$
+$$\begin{equation}\Delta x(t) = x(t) - x(t-1)\end{equation}$$
 
-$$\Delta x(t+1) = x(t+1) - x(t)$$
+$$\begin{equation}\Delta x(t+1) = x(t+1) - x(t)\end{equation}$$
 
-$$\Delta u(t) = u(t) - u(t-1)$$
+$$\begin{equation}\Delta u(t) = u(t) - u(t-1)\end{equation}$$
 
-$$\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)$$
+$$\begin{equation}\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)\end{equation}$$
 
 Next we must find the equation for $y(t+1)$ in terms of $y(t)$
 
-$$y(t) = Cx(t) + Du(t)$$
+$$\begin{equation}y(t) = Cx(t) + Du(t)\end{equation}$$
 
-$$y(t+1) = Cx(t+1) + Du(t+1)$$
+$$\begin{equation}y(t+1) = Cx(t+1) + Du(t+1)\end{equation}$$
 
 Assume the inputs are equal???? IDK why
 
-$$\Delta y(t+1) = y(t+1) - y(t)$$
+$$\begin{equation}\Delta y(t+1) = y(t+1) - y(t)\end{equation}$$
 
-$$\Delta y(t+1) = C(x(t+1)-x(t))$$
+$$\begin{equation}\Delta y(t+1) = C(x(t+1)-x(t))\end{equation}$$
 
-$$\Delta y(t+1) = C \Delta x(t+1)$$
+$$\begin{equation}\Delta y(t+1) = C \Delta x(t+1)\end{equation}$$
 
-$$\Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t)$$
+$$\begin{equation}\Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t)\end{equation}$$
 
-$$y(t+1) = y(t) + \Delta y(t+1)$$
+$$\begin{equation}y(t+1) = y(t) + \Delta y(t+1)\end{equation}$$
 
-$$y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)$$
+$$\begin{equation}y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)\end{equation}$$
 
 So
 
@@ -402,4 +402,4 @@ And thus we have our optimal $\Delta U_t^*$ sequence for our horizon of length N
 
 Again we apply our receding horizon, so multiplying by $I_N$ (or with a control horizon size $M$ then $I_M$)
 
-$$\begin{equation} \Delta u_t^* = \begin{bmatrix} \end{bmatrix} \end{equation}
+$$\begin{equation} \Delta u_t^* = \begin{bmatrix} \end{bmatrix} \end{equation}$$
