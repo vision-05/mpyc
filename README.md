@@ -1,9 +1,54 @@
 # mpyc
-MPC module from scratch in Python with numpy, an application of my control 2 module
+A practical guide to controls engineering for Robotics and AI, building up to an implementation of Model Predictive Control. 
 
-# Discretisation
+# Control engineering for Robotics and AI
 
-## Euler discretisation
+## Introduction to control engineering:
+Control engineering is the field of engineering concerned with "controlling" systems. But what does this actually mean? 
+
+The dictionary definition of control is to "determine the behaviour or supervise the running of". In control engineering I think it is more apt to change the definition to "determine the behaviour and supervise the running of". Think of an engineering problem and how you might apply this concept.
+
+This might include making an aeroplane fly. The first step is to determine the aeroplane's behaviour. If an extraterrestrial being has never seen an aeroplane before and is just told to "make it fly", the result will probably not be good. You might end up with the being deconstructing it and throwing the individual pieces, disintegrating it with a laser gun and spreading the dust in front of a fan, or something entirely more absurd.
+
+We humans know that the plane has certain mechanics, or rules for its motion. We know that if we make it move fast enough, it will start to generate lift on its wings, and elevate into the sky. This is an example of a plane's behaviour. Once we have determined this, we can focus on controlling the flight. Without having determined this behaviour, we will not be able to use a logical method to control the flight. We might get lucky with trial and error, but that is not what engineers do. Without determining this relationship between horizontal speed and vertical lift, we might spend entire lifetimes driving our planes at 10mph and wondering when we will fly. (If you look up the history of the aeroplane, you will see why taking the "determining behaviour approach" through mechanics first might save a lot of time and lives)
+
+The next step is supervising the running of the system. In the case of an aeroplane, we want to make sure that when the pilot sets a speed and direction, the plane will maintain that speed.
+
+Sometimes we will encounter disturbances, such as turbulence. A good control system will be __robust__ to disturbances, meaning that they will be able to quickly and smoothly recover from or reject them.
+
+# Control Systems
+
+That might mean controlling the speed of a car to a desired setpoint, the orientation of a satellite in the direction of the Earth, etc, etc.
+
+Take the example of a car's cruise control. How can we make a cruise control that keeps the car's speed at our desired setpoint? 
+
+First let us define our system. The car's speed, what we want to control, is our __output__. This is the main value we care about.
+
+To change the __output__ directly, we have to control an __input__ (or set of inputs). In our case, this will be the engine's throttle. Open it more, and more fuel or air enters the engine, making the engine work harder and eventually driving the car to move faster. Close the throttle, and less fuel and air get to mix and combust, and we end up with a slower speed.
+
+So in this case our __input__ might be the "openness" of our throttle.
+
+Then we have to consider the current __state__ of the system. What is our actual speed right now? The car's speed therefore is one of our states. But in order to see this state, we need to either measure or estimate this. We use a __sensor__ (or __observer__), or a set of sensors for this. In our case, this is the car's speedometer.
+
+You might notice that I mentioned speed being our output and a state. This is because the output is defined as a linear combination of our states and inputs. The states are the core values of the system, and our output tends to be the states we care to control, or some combination of the states we care to control.
+
+Finally, we need a __controller__. This controller will be what decides how much to change our input, to reach our desired output. In our case, the car computer will decide how much to open or close the engine throttle to maintain our desired speed.
+
+The controller works by finding out how far away from the setpoint our current output is. Let us call the setpoint our __reference__ from now on. There is a lot of nomenclature in control, sorry. It's best to get used to using these words now before you end up all confused in a conference of control engineers discussing MPCs and PIDs and SSE.
+
+
+
+# Generic control strategies
+
+## Bang bang
+
+## PID
+
+# State Space Modelling
+
+## Discretisation
+
+### Euler discretisation
 $$\dot{x}(t) = A_cx(t)+B_cu(t)$$
 
 $$y(t) = C_cx(t) + D_cu(t)$$
@@ -39,7 +84,7 @@ $$D = D_c$$
 
 Giving us the discretised system for a state space description
 
-## Exact discretisation
+### Exact discretisation
 Take the state space description
 
 $$\dot{x}(t) = A_cx(t)+B_cu(t)$$
