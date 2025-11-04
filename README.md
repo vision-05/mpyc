@@ -292,45 +292,58 @@ We want to minimise the difference between the output and our reference, so this
 
 Thus we will need a new set of equations, starting with state equations that contain a constant unknown disturbance
 
-Fill in here
+$$\begin{equation} x(t+1) = Ax(t) + Bu(t) + B_d d_c \end{equation}$$
 
-$$\Delta x(t) = x(t) - x(t-1)$$
+$$\begin{equation} x(t) = Ax(t-1) + Bu(t-1) + B_d d_c \end{equation}$$
 
-$$\Delta x(t+1) = x(t+1) - x(t)$$
+$(1)$ - $(2)$
 
-$$\Delta u(t) = u(t) - u(t-1)$$
+$$\begin{equation} \Delta x(t+1) = A(x(t) - x(t-1)) + B(u(t) - u(t-1)) \end{equation}$$
 
-$$\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)$$
+Removing effect of disturbance
+
+$$\begin{equation} \Delta x(t) = x(t) - x(t-1) \end{equation}$$
+
+$$\begin{equation}\Delta x(t+1) = x(t+1) - x(t)\end{equation}$$
+
+$$\begin{equation}\Delta u(t) = u(t) - u(t-1)\end{equation}$$
+
+Substitute in to (3)
+
+$$\begin{equation}\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)\end{equation}$$
 
 Next we must find the equation for $y(t+1)$ in terms of $y(t)$
 
-$$y(t) = Cx(t) + Du(t)$$
+$$\begin{equation}y(t) = Cx(t) + Du(t)\end{equation}$$
 
-$$y(t+1) = Cx(t+1) + Du(t+1)$$
+$$\begin{equation}y(t+1) = Cx(t+1) + Du(t+1)\end{equation}$$
 
-Assume the inputs are equal???? IDK why
+Subtract $(9)$ - $(8)$
 
-$$\Delta y(t+1) = y(t+1) - y(t)$$
+$$\begin{equation}\Delta y(t+1) = y(t+1) - y(t)\end{equation}$$
 
-$$\Delta y(t+1) = C(x(t+1)-x(t))$$
+$$\begin{equation}\Delta y(t+1) = C(x(t+1)-x(t)) + D(u(t+1)-u(t))\end{equation}$$
 
-$$\Delta y(t+1) = C \Delta x(t+1)$$
+$$\begin{equation} \Delta y(t+1) = C\Delta x(t+1) + D\Delta u(t+1) \end{equation}$$
 
-$$\Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t)$$
+Then
 
-$$y(t+1) = y(t) + \Delta y(t+1)$$
+$$\begin{equation} \Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t) + D\Delta u(t+1) \end{equation}$$
 
-$$y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)$$
+
+$$\begin{equation}y(t+1) = y(t) + \Delta y(t+1)\end{equation}$$
+
+$$\begin{equation}y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t) + D\Delta u(t+1)\end{equation}$$
 
 So
 
 $$\begin{equation}\begin{bmatrix} \Delta x(t+1) \\\ y(t+1) \end{bmatrix}
 = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}
 \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + 
-\begin{bmatrix} B \\\ CB\end{bmatrix} \Delta u(t)\end{equation}$$
+\begin{bmatrix} B & 0 \\\ CB & D \end{bmatrix} \begin{bmatrix} \Delta u(t) \\\ \Delta u(t+1) \end{bmatrix}$$
 
 And then our new output is 
-$$\begin{equation}y(t) = \begin{bmatrix} 0 & I \end{bmatrix}
+$$\begin{equation}y_a(t) = \begin{bmatrix} 0 & I \end{bmatrix}
 \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix}\end{equation}$$
 
 This gives us our augmented state space, so we have
@@ -350,6 +363,8 @@ $$A_a = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}$$
 $$B_a = \begin{bmatrix} B \\\ CB \end{bmatrix}$$
 
 $$C_a = \begin{bmatrix} 0 & I \end{bmatrix}$$
+
+$$D_a = \begin{bmatrix} 0 \\\ D \end{bmatrix}$$
 
 Our next step is to turn this into a QP problem to solve, so we must come up with a quadratic cost function
 
