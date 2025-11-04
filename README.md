@@ -294,7 +294,6 @@ Thus we will need a new set of equations, starting with state equations that con
 
 $$\begin{equation} x(t+1) = Ax(t) + Bu(t) + B_d d_c \end{equation}$$
 
-<<<<<<< HEAD
 $$\begin{equation} x(t) = Ax(t-1) + Bu(t-1) + B_d d_c \end{equation}$$
 
 $(1)$ - $(2)$
@@ -311,14 +310,6 @@ $$\begin{equation}\Delta u(t) = u(t) - u(t-1)\end{equation}$$
 
 Substitute in to (3)
 
-=======
-$$\begin{equation}\Delta x(t) = x(t) - x(t-1)\end{equation}$$
-
-$$\begin{equation}\Delta x(t+1) = x(t+1) - x(t)\end{equation}$$
-
-$$\begin{equation}\Delta u(t) = u(t) - u(t-1)\end{equation}$$
-
->>>>>>> 14f398ead95ba0acb8e7564b8838177c2788892a
 $$\begin{equation}\Delta x(t+1) = A \Delta x(t) + B \Delta u(t)\end{equation}$$
 
 Next we must find the equation for $y(t+1)$ in terms of $y(t)$
@@ -331,7 +322,6 @@ Subtract $(9)$ - $(8)$
 
 $$\begin{equation}\Delta y(t+1) = y(t+1) - y(t)\end{equation}$$
 
-<<<<<<< HEAD
 $$\begin{equation}\Delta y(t+1) = C(x(t+1)-x(t)) + D(u(t+1)-u(t))\end{equation}$$
 
 $$\begin{equation} \Delta y(t+1) = C\Delta x(t+1) + D\Delta u(t+1) \end{equation}$$
@@ -344,7 +334,7 @@ $$\begin{equation} \Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t) + D\Delta u(t
 $$\begin{equation}y(t+1) = y(t) + \Delta y(t+1)\end{equation}$$
 
 $$\begin{equation}y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t) + D\Delta u(t+1)\end{equation}$$
-=======
+
 $$\begin{equation}\Delta y(t+1) = C(x(t+1)-x(t))\end{equation}$$
 
 $$\begin{equation}\Delta y(t+1) = C \Delta x(t+1)\end{equation}$$
@@ -354,14 +344,13 @@ $$\begin{equation}\Delta y(t+1) = CA \Delta x(t) + CB \Delta u(t)\end{equation}$
 $$\begin{equation}y(t+1) = y(t) + \Delta y(t+1)\end{equation}$$
 
 $$\begin{equation}y(t+1) = y(t) + CA \Delta x(t) + CB \Delta u(t)\end{equation}$$
->>>>>>> 14f398ead95ba0acb8e7564b8838177c2788892a
 
 So
 
 $$\begin{equation}\begin{bmatrix} \Delta x(t+1) \\\ y(t+1) \end{bmatrix}
 = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}
 \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + 
-\begin{bmatrix} B & 0 \\\ CB & D \end{bmatrix} \begin{bmatrix} \Delta u(t) \\\ \Delta u(t+1) \end{bmatrix}$$
+\begin{bmatrix} B & 0 \\\ CB & D \end{bmatrix} \begin{bmatrix} \Delta u(t) \\\ \Delta u(t+1) \end{bmatrix}\end{equation}$$
 
 And then our new output is 
 $$\begin{equation}y_a(t) = \begin{bmatrix} 0 & I \end{bmatrix}
@@ -381,11 +370,9 @@ Where
 
 $$A_a = \begin{bmatrix} A & 0 \\\ CA & I \end{bmatrix}$$
 
-$$B_a = \begin{bmatrix} B \\\ CB \end{bmatrix}$$
+$$B_a = \begin{bmatrix} B & 0 \\\ CB & D \end{bmatrix}$$
 
 $$C_a = \begin{bmatrix} 0 & I \end{bmatrix}$$
-
-$$D_a = \begin{bmatrix} 0 \\\ D \end{bmatrix}$$
 
 Our next step is to turn this into a QP problem to solve, so we must come up with a quadratic cost function
 
