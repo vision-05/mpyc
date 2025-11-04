@@ -470,4 +470,62 @@ And thus we have our optimal $\Delta U_t^*$ sequence for our horizon of length N
 
 Again we apply our receding horizon, so multiplying by $I_N$ (or with a control horizon size $M$ then $I_M$)
 
-$$\begin{equation} \Delta u_t^* = \begin{bmatrix} \end{bmatrix} \end{equation}$$
+$$\begin{equation} \Delta u_t^* = \begin{bmatrix}1 & 0 & ... & 0 \end{bmatrix} \begin{bmatrix} \Delta u_t^* \\\ \Delta u_{t+1}^* \\\ . \\\ . \\\ . \\\ \Delta u_{t+N-1}^*\end{bmatrix} \end{equation}$$
+
+or
+
+$$\begin{equation} \Delta u_t^* = I_N \Delta U_t^*\end{equation}$$
+
+$$\begin{equation} \Delta u_t^* = -I_N(\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_Q (F x_a(t) - Er_c)\end{equation}$$
+
+$$\begin{equation} \Delta u_t^* = -I_N(\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_Q F x_a(t) + I_N (\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_QEr_c\end{equation}$$
+
+$$\begin{equation} \Delta u(t)^* = -k_{mpc} x_a(t) + k_r r_c \end{equation}$$
+
+where
+
+$$ k_{mpc} = I_N(\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_Q F$$
+
+and
+
+$$ k_r = I_N (\phi^T Q_Q \phi + R_R)^{-1} \phi^T Q_QE$$
+
+Which is in a form very similar to that of a PI controller
+
+Thus we can then work our way back to our control law for our desired $x(t)$ and $y(t)$
+
+Start by expanding our control law back into the constituent vectors
+
+$$\begin{equation} \Delta u(t)^* = -k_{mpc} \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + k_r r_c \end{equation}$$
+
+$$\begin{equation} \Delta u(t)^* = -\begin{bmatrix} k_{mpc_x} & k_{mpc_y} \end{bmatrix} \begin{bmatrix} \Delta x(t) \\\ y(t) \end{bmatrix} + k_r r_c \end{equation}$$
+
+$$\begin{equation} \Delta u(t)^* = -k_{mpc_x} \Delta x(t) - k_{mpc_y} y(t) + k_r r_c \end{equation}$$
+
+and remember
+
+$$\begin{equation} y(t) = C x(t) \end{equation}$$
+
+so
+
+$$\begin{equation}\Delta u(t)^* = -k_{mpc_x}\Delta x(t) - k_{mpc_y}Cx(t) + k_r r_c\end{equation}$$
+
+Then by the definition of the deltas
+
+$$\begin{equation} u(t) - u(t-1) = -k_{mpc_x}(x(t)-x(t-1)) - k_{mpc_y}Cx(t) + k_r r_c\end{equation}$$
+
+$$\begin{equation} u(t) = u(t-1) -k_{mpc_x}(x(t)-x(t-1)) - k_{mpc_y}Cx(t) + k_r r_c\end{equation}$$
+
+Then recursively define $u(t-k)$ to get
+
+$$\begin{equation} u(t-1) = u(t-2) -k_{mpc_x}(x(t-1)-x(t-2)) - k_{mpc_y}Cx(t-1) + k_r r_c\end{equation}$$
+
+until we reach
+
+$$\begin{equation} u(1) = u(0) -k_{mpc_x}(x(1)-x(0)) - k_{mpc_y}Cx(1) + k_r r_c\end{equation}$$
+
+So we can say
+
+$$\begin{equation} u(t) = u(0) -k_{mpc_x}\sum_{i=1}^t(x(i)-x(i-1)) - k_{mpc_y}\sum_{i=1}^ty(i) + k_r \sum_{i=1}^tr_c\end{equation}$$
+
+And there you have your input for the timestep
