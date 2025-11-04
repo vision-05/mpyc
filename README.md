@@ -57,21 +57,21 @@ We would like to discretise this system using the Euler discretisation. The eule
 
 Assume that we only have an integer timestep so we have $t_s$ as our timestep length and $k$ as our integer multiplier
 
-$$\dot{x}(kt_s) = A_cx(kt_s) + B_cu(kt_s)$$
+$$\begin{equation}\dot{x}(kt_s) = A_cx(kt_s) + B_cu(kt_s)\end{equation}$$
 
-$$\dot{x}(kt_s) \approx \frac{x((k+1)t_s) - x(kt_s)}{t_s}$$
+$$\begin{equation}\dot{x}(kt_s) \approx \frac{x((k+1)t_s) - x(kt_s)}{t_s}\end{equation}$$
 
-$$\frac{x((k+1)t_s) - x(kt_s)}{t_s} = A_cx(kt_s) + B_cu(kt_s)$$
+$$\begin{equation}\frac{x((k+1)t_s) - x(kt_s)}{t_s} = A_cx(kt_s) + B_cu(kt_s)\end{equation}$$
 
-$$x((k+1)t_s) - x(kt_s) = t_sA_cx(kt_s) + t_sB_cu(kt_s)$$
+$$\begin{equation}x((k+1)t_s) - x(kt_s) = t_sA_cx(kt_s) + t_sB_cu(kt_s)\end{equation}$$
 
-$$x((k+1)t_s) = x(kt_s) + t_sA_cx(kt_s) + t_sB_cu(kt_s)$$
+$$\begin{equation}x((k+1)t_s) = x(kt_s) + t_sA_cx(kt_s) + t_sB_cu(kt_s)\end{equation}$$
 
-$$x((k+1)t_s) = (I+t_sA_c)x(kt_s) + t_sB_cu(kt_s)$$
+$$\begin{equation}x((k+1)t_s) = (I+t_sA_c)x(kt_s) + t_sB_cu(kt_s)\end{equation}$$
 
-$$x(k+1) = Ax(k) + Bu(k)$$
+$$\begin{equation}x(k+1) = Ax(k) + Bu(k)\end{equation}$$
 
-$$y(k) = C(k) + D(k)$$
+$$\begin{equation}y(k) = C(k) + D(k)\end{equation}$$
 Where
 
 $$A = I+t_sA_c$$
@@ -87,95 +87,95 @@ Giving us the discretised system for a state space description
 ### Exact discretisation
 Take the state space description
 
-$$\dot{x}(t) = A_cx(t)+B_cu(t)$$
+$$\begin{equation}\dot{x}(t) = A_cx(t)+B_cu(t)\end{equation}$$
 
-$$y(t) = C_cx(t) + D_cu(t)$$
+$$\begin{equation}y(t) = C_cx(t) + D_cu(t)\end{equation}$$
 
 Let us find the general solution to a state space system, which is the standard steps for solving homogeneous linear first order ODE
 
-$$\dot{x}(t) = ax(t)+bu(t)\\$$
+$$\begin{equation}\dot{x}(t) = ax(t)+bu(t)\end{equation}$$
 
 Multiply by integrating factor
 
-$$e^{-at}\dot{x}(t) = e^{-at}ax(t) + e^{-at}bu(t)$$
+$$\begin{equation}e^{-at}\dot{x}(t) = e^{-at}ax(t) + e^{-at}bu(t)\end{equation}$$
 
 Rearrange to have all x(t) terms on one side
 
-$$-ae^{-at}x(t) + e^{-at}\dot{x}(t) = e^{-at}bu(t)$$
+$$\begin{equation}-ae^{-at}x(t) + e^{-at}\dot{x}(t) = e^{-at}bu(t)\end{equation}$$
 
 Through product rule
 
-$$\frac{d}{dt}(e^{-at}x(t)) = (\frac{d}{dt}e^{-at})x(t) + e^{-at}(\frac{d}{dt}x(t))$$
+$$\begin{equation}\frac{d}{dt}(e^{-at}x(t)) = (\frac{d}{dt}e^{-at})x(t) + e^{-at}(\frac{d}{dt}x(t))\end{equation}$$
 
-$$\frac{d}{dt}(e^{-at}x(t)) = -ae^{-at}x(t) + e^{-at}\dot{x}(t)$$
+$$\begin{equation}\frac{d}{dt}(e^{-at}x(t)) = -ae^{-at}x(t) + e^{-at}\dot{x}(t)\end{equation}$$
 
 Substitute in this equality
 
-$$\frac{d}{dt}(e^{-at}x(t)) = e^{-at}bu(t)$$
+$$\begin{equation}\frac{d}{dt}(e^{-at}x(t)) = e^{-at}bu(t)\end{equation}$$
 
 Then integrate both sides, from time $t$ to time $t_0$. We introduce a new variable $\tau$ for this
 
-$$e^{-at}x(t) - e^{-at_0}x(t_0) = \int_{t_0}^te^{-a\tau}bu(\tau)d\tau$$
+$$\begin{equation}e^{-at}x(t) - e^{-at_0}x(t_0) = \int_{t_0}^te^{-a\tau}bu(\tau)d\tau\end{equation}$$
 
 Rearrange
 
-$$e^{-at}x(t) = e^{-at_0}x(t_0) + \int_{t_0}^te^{-a\tau}bu(\tau)d\tau$$
+$$\begin{equation}e^{-at}x(t) = e^{-at_0}x(t_0) + \int_{t_0}^te^{-a\tau}bu(\tau)d\tau\end{equation}$$
 
 Divide through by $e^{-at}$ (as this cannot be 0)
 
-$$x(t) = e^{a(t-t_0)}x(t_0) + \int_{t_0}^te^{a(t-\tau)}bu(\tau)d\tau$$
+$$\begin{equation}x(t) = e^{a(t-t_0)}x(t_0) + \int_{t_0}^te^{a(t-\tau)}bu(\tau)d\tau\end{equation}$$
 
 Now substitute our matrix values in again for a standard response
 
-$$x(t) = e^{A_c(t-t_0)}x(t_0) + \int_{t_0}^te^{A_c(t-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}x(t) = e^{A_c(t-t_0)}x(t_0) + \int_{t_0}^te^{A_c(t-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Now we have the standard format, we will use this to write our solutions for our discrete timesteps $x(kt_s)$ and $x((k+1)t_s)$, and setting $t_0 = 0$
 
-$$x((k+1)t_s) = e^{A_c(k+1)t_s}x(0) + \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}x((k+1)t_s) = e^{A_c(k+1)t_s}x(0) + \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
-$$x(kt_s) = e^{A_ckt_s}x(0) + \int_{0}^{kt_s}e^{A_c(kt_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}x(kt_s) = e^{A_ckt_s}x(0) + \int_{0}^{kt_s}e^{A_c(kt_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Then as
 
-$$e^{A_ckt_s} \cdot e^{A_ct_s} = e^{A_c(k+1)t_s}$$
+$$\begin{equation}e^{A_ckt_s} \cdot e^{A_ct_s} = e^{A_c(k+1)t_s}\end{equation}$$
 
 We multiply both sides by $e^{A_ct_s}$
 
-$$e^{A_ct_s}x(kt_s) = e^{A_ct_s}e^{A_ckt_s}x(0) + e^{A_ct_s}\int_{0}^{kt_s}e^{A_c(kt_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}e^{A_ct_s}x(kt_s) = e^{A_ct_s}e^{A_ckt_s}x(0) + e^{A_ct_s}\int_{0}^{kt_s}e^{A_c(kt_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Simplify
 
-$$e^{A_ct_s}x(kt_s) = e^{A_c(k+1)t_s}x(0) + \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}e^{A_ct_s}x(kt_s) = e^{A_c(k+1)t_s}x(0) + \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Then substitute
 
-$$e^{A_c(k+1)t_s}x(0) = x((k+1)t_s) - \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}e^{A_c(k+1)t_s}x(0) = x((k+1)t_s) - \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
-$$e^{A_ct_s}x(kt_s) = x((k+1)t_s) - \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}Bu(\tau)d\tau + \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}e^{A_ct_s}x(kt_s) = x((k+1)t_s) - \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}Bu(\tau)d\tau + \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Rearrange
 
-$$x((k+1)t_s) = e^{A_ct_s}x(kt_s) + \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau - \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}Bu(\tau)d\tau$$
+$$\begin{equation}x((k+1)t_s) = e^{A_ct_s}x(kt_s) + \int_{0}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau - \int_{0}^{kt_s}e^{A_c((k+1)t_s-\tau)}Bu(\tau)d\tau\end{equation}$$
 
 By rule of integral linearity
 
-$$x((k+1)t_s) = e^{A_ct_s}x(kt_s) + \int_{kt_s}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau$$
+$$\begin{equation}x((k+1)t_s) = e^{A_ct_s}x(kt_s) + \int_{kt_s}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}B_cu(\tau)d\tau\end{equation}$$
 
 Then because of our discretisation, in the step between $kt_s$ and $(k+1)t_s$ $u(\tau)$ must be constant so we take it out of the integral
 
-$$x((k+1)t_s) = e^{A_ct_s}x(kt_s) + B_cu(kt_s)\int_{kt_s}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}d\tau$$
+$$\begin{equation}x((k+1)t_s) = e^{A_ct_s}x(kt_s) + B_cu(kt_s)\int_{kt_s}^{(k+1)t_s}e^{A_c((k+1)t_s-\tau)}d\tau\end{equation}$$
 
 Then take new variable $\lambda = (k+1)t_s - \tau$, (so we flip the sign of the integral as $\lambda$ is related to $-\tau$)
 
-$$x((k+1)t_s) = e^{A_ct_s}x(kt_s) - B_cu(kt_s)\int_{t_s}^{0}e^{A_c\lambda}d\lambda$$
+$$\begin{equation}x((k+1)t_s) = e^{A_ct_s}x(kt_s) - B_cu(kt_s)\int_{t_s}^{0}e^{A_c\lambda}d\lambda\end{equation}$$
 
 Then we can restate this as $\tau = -\lambda$. Yes I know I'm redefining and this is mathematically incorrect, but I am an engineer and I already used tau but in the powerpoint slide for the final equation I wanted, my professor used tau :)
 
-$$x((k+1)t_s) = e^{A_ct_s}x(kt_s) + B_cu(kt_s)\int_{0}^{t_s}e^{A_c\tau}d\tau$$
+$$\begin{equation}x((k+1)t_s) = e^{A_ct_s}x(kt_s) + B_cu(kt_s)\int_{0}^{t_s}e^{A_c\tau}d\tau\end{equation}$$
 
 Finally we will redefine our equation as
 
-$$x((k+1)t_s) = Ax(kt_s) + Bu(kt_s)$$
+$$\begin{equation}x((k+1)t_s) = Ax(kt_s) + Bu(kt_s)\end{equation}$$
 
 Where
 
@@ -195,11 +195,11 @@ $$D = D_c$$
 
 As python does not support integration that returns a matrix, we instead create a new matrix
 
-$$M = \begin{bmatrix} A_c & B_c \\\ 0 & 0 \end{bmatrix}$$
+$$\begin{equation}M = \begin{bmatrix} A_c & B_c \\\ 0 & 0 \end{bmatrix}\end{equation}$$
 
 Then by a long taylor expansion of the matrix exponential
 
-$$e^{Mt_s} = \begin{bmatrix} e^{A_ct_s} & \int_{0}^{t_s}e^{A_c\tau}d\tau \\\ 0 & I \end{bmatrix}$$
+$$\begin{equation}e^{Mt_s} = \begin{bmatrix} e^{A_ct_s} & \int_{0}^{t_s}e^{A_c\tau}d\tau \\\ 0 & I \end{bmatrix}\end{equation}$$
 
 Thus rather than compute integrals, and take many matrix exponentials, we only need to take one matrix exponential and then extract our terms.
 
